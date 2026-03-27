@@ -15,6 +15,10 @@ public class ChatServer {
                 Socket socket = server.accept();
                 System.out.println("New client connected");
 
+                ClientHandler handler = new ClientHandler(socket);
+
+                Thread t = new Thread(handler);
+                t.start();
             }
 
         } catch (Exception e) {
