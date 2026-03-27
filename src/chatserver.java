@@ -1,7 +1,11 @@
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatServer {
+
+    private List<Observer> clients = new ArrayList<>();
 
     public void startServer() {
 
@@ -16,6 +20,7 @@ public class ChatServer {
                 System.out.println("New client connected");
 
                 ClientHandler handler = new ClientHandler(socket);
+                addObserver(handler);
 
                 Thread t = new Thread(handler);
                 t.start();
@@ -25,4 +30,20 @@ public class ChatServer {
             e.printStackTrace();
         }
     }
+    @Override
+    public void addObserver(Observer o) {
+        clients.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        clients.remove(o);
+    }
+
+    @Override
+    public void notifyObservers(String message) {
+        for (Observer o : clients) {
+            o.update(message);
+    }
+}
 }
