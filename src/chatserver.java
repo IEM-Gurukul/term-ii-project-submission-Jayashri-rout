@@ -20,6 +20,7 @@ public class ChatServer {
                 System.out.println("New client connected");
 
                 ClientHandler handler = new ClientHandler(socket);
+                handler.setServer(this);
                 addObserver(handler);
 
                 Thread t = new Thread(handler);
