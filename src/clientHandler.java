@@ -11,9 +11,10 @@ public class ClientHandler implements Runnable, Observer {
     private PrintWriter out;
     private String name;
 
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket,ChatServer server) {
 
         this.socket = socket;
+        this.server = server;
 
         try {
             in = new BufferedReader(
@@ -31,8 +32,7 @@ public class ClientHandler implements Runnable, Observer {
         }
     }
 
-    public void setServer(ChatServer server) {
-        this.server = server;
+    
     }
 
     @Override

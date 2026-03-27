@@ -3,7 +3,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatServer {
+public class ChatServer implements Subject {
 
     private List<Observer> clients = new ArrayList<>();
 
@@ -19,8 +19,7 @@ public class ChatServer {
                 Socket socket = server.accept();
                 System.out.println("New client connected");
 
-                ClientHandler handler = new ClientHandler(socket);
-                handler.setServer(this);
+                ClientHandler handler = new ClientHandler(socket, this);
                 addObserver(handler);
 
                 Thread t = new Thread(handler);
