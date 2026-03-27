@@ -24,6 +24,7 @@ public class ClientHandler implements Runnable, Observer {
 
             out.println("Enter your name:");
             name = in.readLine();
+            server.notifyObservers(name + " joined the chat");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,20 +38,20 @@ public class ClientHandler implements Runnable, Observer {
     @Override
     public void run() {
 
-        try {
-            String msg;
+    try {
+        String msg;
 
-            while ((msg = in.readLine()) != null) {
-
-                server.notifyObservers(name + ": " + msg);
-            }
-
-        } catch (Exception e) {
-
-            System.out.println(name + " disconnected");
-
+        while ((msg = in.readLine()) != null) {
+            server.notifyObservers(name + ": " + msg);
         }
+
+    } catch (Exception e) {
+        System.out.println(name + " disconnected");
+
+    } finally {
+        server.notifyObservers(name + " left the chat");
     }
+}
 
     @Override
     public void update(String message) {
